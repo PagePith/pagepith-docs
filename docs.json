@@ -1,11 +1,11 @@
 {
   "$schema": "https://mintlify.com/docs.json",
-  "theme": "mint",
-  "name": "Mintlify Starter Kit",
+  "theme": "maple",
+  "name": "PagePith",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#5B3FD6",
+    "light": "#F3C43E",
+    "dark": "#4127B7"
   },
   "favicon": "/favicon.svg",
   "navigation": {
@@ -21,33 +21,106 @@
     "global": {
       "anchors": [
         {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
+          "anchor": "Website",
+          "icon": "house",
+          "href": "https://pagepith.com"
         },
         {
           "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
+          "href": "https://pagepith.com/blog",
           "icon": "newspaper"
         }
       ]
-    }
+    },
+    "groups": [
+      {
+        "group": "Getting started",
+        "icon": "rocket",
+        "pages": [
+          "index",
+          "quickstart",
+          "authentication"
+        ]
+      },
+      {
+        "group": "Guides",
+        "icon": "book-open",
+        "pages": [
+          "guides/scraping",
+          "guides/async-scraping",
+          "guides/video",
+          "guides/monitoring",
+          "guides/mcp"
+        ]
+      },
+      {
+        "group": "API reference",
+        "icon": "brackets-curly",
+        "pages": [
+          "api-reference/overview",
+          "api-reference/errors",
+          {
+            "group": "Scrape",
+            "icon": "file-code",
+            "pages": [
+              "api-reference/scrape/scrape-url",
+              "api-reference/scrape/scrape-url-async",
+              "api-reference/scrape/invalidate-cache"
+            ]
+          },
+          {
+            "group": "Monitoring",
+            "icon": "radar",
+            "pages": [
+              "api-reference/monitoring/list-monitors",
+              "api-reference/monitoring/create-monitor",
+              "api-reference/monitoring/get-monitor",
+              "api-reference/monitoring/update-monitor",
+              "api-reference/monitoring/run-monitor",
+              "api-reference/monitoring/list-checks",
+              "api-reference/monitoring/list-events",
+              "api-reference/monitoring/delete-monitor"
+            ]
+          },
+          {
+            "group": "Video",
+            "icon": "video",
+            "pages": [
+              "api-reference/video/process-video",
+              "api-reference/video/get-video-job"
+            ]
+          },
+          {
+            "group": "System",
+            "icon": "heart-pulse",
+            "pages": [
+              "api-reference/system/health"
+            ]
+          }
+        ]
+      }
+    ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/favicon.svg",
+    "dark": "/favicon.svg",
+    "href": "https://pagepith.com"
   },
   "navbar": {
     "links": [
       {
-        "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "https://pagepith.com",
+        "label": "Website"
+      },
+      {
+        "href": "https://pagepith.com/blog",
+        "label": "Blog"
       }
     ],
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://app.mintlify.com"
+      "href": "https://pagepith.com/dashboard"
     }
   },
   "contextual": {
@@ -63,10 +136,61 @@
     ]
   },
   "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+    "links": [
+      {
+        "header": "Product",
+        "items": [
+          {
+            "label": "Website",
+            "href": "https://pagepith.com"
+          },
+          {
+            "label": "Pricing",
+            "href": "https://pagepith.com/"
+          },
+          {
+            "label": "Blog",
+            "href": "https://pagepith.com/blog"
+          }
+        ]
+      },
+      {
+        "header": "Legal",
+        "items": [
+          {
+            "label": "Trust",
+            "href": "https://pagepith.com/trust"
+          },
+          {
+            "label": "Privacy",
+            "href": "https://pagepith.com/privacy"
+          },
+          {
+            "label": "Terms",
+            "href": "https://pagepith.com/terms"
+          }
+        ]
+      }
+    ]
+  },
+  "description": "Documentation for turning web pages, documents, and social videos into clean, structured content with the PagePith API and MCP server.",
+  "api": {
+    "openapi": "https://api.pagepith.com/openapi.json",
+    "params": {
+      "expanded": "closed"
+    },
+    "playground": {
+      "display": "interactive"
+    },
+    "examples": {
+      "defaults": "required",
+      "languages": [
+        "curl",
+        "javascript",
+        "python"
+      ],
+      "prefill": true,
+      "autogenerate": true
     }
   }
 }

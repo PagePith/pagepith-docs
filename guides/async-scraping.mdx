@@ -1,0 +1,39 @@
+---
+title: "Asynchronous scraping"
+description: "Process URLs in the background and receive results by webhook."
+icon: "clock"
+---
+
+Asynchronous scraping returns a job ID immediately and sends the result to a webhook. Use it for batches or background work.
+
+## Submit a job
+
+```bash
+curl --request POST \
+  --url https://api.pagepith.com/v1/api/scrape/async \
+  --header "Authorization: Bearer $PAGEPITH_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "url": "https://example.com/reports/quarterly",
+    "callbackUrl": "https://app.example.com/webhooks/pagepith"
+  }'
+```
+
+A successful submission returns `202 Accepted`.
+
+```json
+{
+  "jobId": "12843",
+  "status": "queued"
+}
+```
+
+## Handle the callback
+
+Your callback endpoint must accept an HTTP `POST`. PagePith sends the completed scrape result or an error after processing. Return a `2xx` response after you persist the payload.
+
+<Info>
+  PagePith retries failed jobs with exponential backoff. A successful scrape consumes one credit when the worker completes it.
+</Info>
+
+Use the [asynchronous scrape reference](/api-reference/scrape/scrape-url-async) for the complete request schema and response definitions.

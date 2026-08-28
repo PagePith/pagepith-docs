@@ -1,0 +1,42 @@
+---
+title: "Process social video"
+description: "Retrieve video metadata and timestamped transcripts."
+icon: "video"
+---
+
+PagePith retrieves metadata and timestamped transcripts from public YouTube, Instagram, and TikTok videos. Video processing runs as a job.
+
+## Choose a transcript mode
+
+| Mode | Behavior | Credits |
+| --- | --- | --- |
+| `auto` | Prefer native captions and generate a transcript when needed. | Depends on the selected source. |
+| `native` | Use captions supplied by the platform. | 1 credit. |
+| `generate` | Transcribe the audio. | 4 credits per rounded-up audio minute. |
+
+## Process a video
+
+<Steps>
+  <Step title="Queue the video">
+    ```bash
+    curl --request POST \
+      --url https://api.pagepith.com/v1/api/video/process \
+      --header "Authorization: Bearer $PAGEPITH_API_KEY" \
+      --header "Content-Type: application/json" \
+      --data '{"url":"https://www.youtube.com/watch?v=dQw4w9WgXcQ","mode":"auto","language":"en"}'
+    ```
+  </Step>
+  <Step title="Poll the job">
+    Use the returned `jobId` until `status` is `completed` or `failed`.
+
+    ```bash
+    curl --url https://api.pagepith.com/v1/api/video/jobs/VIDEO_JOB_ID \
+      --header "Authorization: Bearer $PAGEPITH_API_KEY"
+    ```
+  </Step>
+  <Step title="Read the transcript">
+    A completed job contains video metadata and a transcript with plain text, language, source, and timestamped segments.
+  </Step>
+</Steps>
+
+Set `callbackUrl` when you prefer a webhook over polling. Set `callbackToken` to include a secret your handler can verify.

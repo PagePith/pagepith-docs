@@ -1,47 +1,70 @@
 ---
 title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+description: "Create an API key and scrape your first page."
+icon: "rocket"
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
-
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
+This quickstart returns readable Markdown and HTML for a public URL.
 
 ## Prerequisites
 
-Before you begin, you must have:
+You need a PagePith account and an API key. Create a key in the [PagePith dashboard](https://pagepith.com/dashboard/keys).
 
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
+<Warning>
+  Copy a new API key when it is created. PagePith does not display the full key again. Keep it out of client-side code and source control.
+</Warning>
 
-## Get started
+## Scrape a page
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Set your API key">
+    Store the key in an environment variable.
 
     ```bash
-    npm install your-package
+    export PAGEPITH_API_KEY="pp_live_your_key"
     ```
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
+  <Step title="Send a request">
+    Call the synchronous scrape endpoint with a public URL.
 
     ```bash
-    your-cli init
+    curl --request POST \
+      --url https://api.pagepith.com/v1/api/scrape \
+      --header "Authorization: Bearer $PAGEPITH_API_KEY" \
+      --header "Content-Type: application/json" \
+      --data '{"url":"https://example.com"}'
     ```
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
+  <Step title="Use the result">
+    Read `markdown` for model-ready text or `html` when you need the extracted markup.
 
-    ```bash
-    your-cli start
+    ```json
+    {
+      "url": "https://example.com",
+      "finalUrl": "https://example.com/",
+      "title": "Example Domain",
+      "markdown": "# Example Domain\n\nThis domain is for use in illustrative examples...",
+      "html": "<h1>Example Domain</h1>...",
+      "contentLength": 125,
+      "fetchedAt": "2026-08-28T12:00:00.000Z",
+      "cached": false
+    }
     ```
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+<Check>
+  A `200` response means the page was converted successfully. Each successful scrape consumes one credit.
+</Check>
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
-</Tip>
+## Next steps
+
+<Columns cols={2}>
+  <Card title="Scraping options" icon="sliders" href="/guides/scraping">
+    Control caching, timeouts, and dynamic content.
+  </Card>
+
+  <Card title="API reference" icon="brackets-curly" href="/api-reference/scrape/scrape-url">
+    Open the interactive endpoint reference.
+  </Card>
+</Columns>
