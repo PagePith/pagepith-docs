@@ -1,0 +1,42 @@
+---
+title: "Connect with MCP"
+description: "Connect an AI client to PagePith’s remote MCP server."
+icon: "plug"
+---
+
+Connect PagePith’s remote MCP server to give an AI client access to public web pages and social video transcripts.
+
+## Connection
+
+Use the Streamable HTTP endpoint and send your PagePith API key as a Bearer token.
+
+```json
+{
+  "url": "https://mcp.pagepith.com/mcp",
+  "headers": {
+    "Authorization": "Bearer pp_live_your_key"
+  }
+}
+```
+
+The server is stateless. Every request carries its own authentication.
+
+## Available tools
+
+| Tool | Purpose |
+| --- | --- |
+| `read_url` | Return the readable Markdown from a public web page or PDF. |
+| `process_video` | Queue transcript and metadata processing for a public YouTube, Instagram, or TikTok video. |
+| `get_video_job` | Poll a video job and return its result when complete. |
+
+### Read a URL
+
+`read_url` requires a complete `url`. Set `fresh` to `true` to bypass the cache.
+
+### Process a video
+
+Call `process_video` with a public video URL. Then pass its `jobId` to `get_video_job` until the job completes.
+
+<Info>
+  MCP requests use the same PagePith account, credits, and API keys as REST requests. A scrape is billed once by the API.
+</Info>

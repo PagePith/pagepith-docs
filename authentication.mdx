@@ -1,0 +1,32 @@
+---
+title: "Authentication"
+description: "Create, use, and protect a PagePith API key."
+icon: "key"
+---
+
+Authentication uses an API key. Send the key as a Bearer token on every REST API or MCP request.
+
+## Create a key
+
+1. Sign in to the [API keys page](https://pagepith.com/dashboard/keys).
+2. Click **Create API key**.
+3. Give the key a name that identifies its environment or application.
+4. Copy the key and store it in your secret manager.
+
+```http
+Authorization: Bearer pp_live_your_key
+```
+
+The legacy `x-api-key` header also works for REST requests, but Bearer authentication is recommended.
+
+<Warning>
+  Never expose an API key in browser code, mobile app bundles, public logs, or source control. Revoke a key from the dashboard if it may have been exposed.
+</Warning>
+
+## Authentication errors
+
+| Status | Error | Meaning |
+| --- | --- | --- |
+| `401` | `unauthorized` | The key is missing or invalid. |
+| `402` | `payment_required` | The account has no remaining credits or active entitlement. |
+| `503` | `auth_unavailable` | PagePith could not verify the key. Retry with backoff. |

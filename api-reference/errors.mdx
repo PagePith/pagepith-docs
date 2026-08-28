@@ -1,0 +1,32 @@
+---
+title: "Errors"
+description: "Handle HTTP status codes and machine-readable API errors."
+icon: "triangle-alert"
+---
+
+PagePith returns JSON errors with an HTTP status and a machine-readable `error` code. Branch on both values instead of parsing the human-readable `message`.
+
+```json
+{
+  "error": "URL_NOT_FOUND",
+  "message": "The requested URL could not be found.",
+  "url": "https://example.com/missing"
+}
+```
+
+## Common status codes
+
+| Status | Error | Meaning | Retry |
+| --- | --- | --- | --- |
+| `400` | `invalid_request` | The JSON body or a field is invalid. | Fix the request. |
+| `401` | `unauthorized` | The API key is missing or invalid. | Fix or replace the key. |
+| `402` | `payment_required` | The account has no remaining credits or entitlement. | Add credits or change the plan. |
+| `403` | `AUTH_REQUIRED` | The target page is behind a login wall. | Choose a public URL. |
+| `404` | `URL_NOT_FOUND` | The target URL is dead or cannot be resolved. | Verify the URL. |
+| `422` | `SCRAPE_FAILED` | The page could not be converted to readable content. | Retry once or change extraction options. |
+| `502` | `ORIGIN_ERROR` | The origin returned a server error. | Retry with backoff. |
+| `503` | `auth_unavailable` | PagePith could not verify the API key. | Retry with backoff. |
+
+## Retry guidance
+
+Retry transient `502` and `503` responses with exponential backoff and jitter. Do not automatically retry `400`, `401`, `402`, `403`, or `404` responses without changing the request or account state.

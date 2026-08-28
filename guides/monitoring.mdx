@@ -1,0 +1,35 @@
+---
+title: "Monitor page changes"
+description: "Create scheduled monitors and inspect detected content changes."
+icon: "radar"
+---
+
+Monitors scrape a public page on a schedule and record meaningful content changes. The first successful check establishes a baseline and does not send a notification.
+
+## Create a monitor
+
+```bash
+curl --request POST \
+  --url https://api.pagepith.com/v1/api/monitors \
+  --header "Authorization: Bearer $PAGEPITH_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "url": "https://example.com/pricing",
+    "notifications": {"email": true}
+  }'
+```
+
+<Warning>
+  If the response includes a `webhookSecret`, store it immediately. PagePith returns generated webhook secrets only once.
+</Warning>
+
+## Monitor lifecycle
+
+- List monitors to inspect current state.
+- Pause or resume a monitor with an update request.
+- Run a monitor immediately when you need an unscheduled check.
+- List checks for execution history.
+- List events for detected changes.
+- Delete a monitor when you no longer need it.
+
+Each check that performs a successful scrape consumes usage according to your plan. See the [monitoring endpoints](/api-reference/monitoring/list-monitors) for complete schemas.

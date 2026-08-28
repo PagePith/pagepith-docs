@@ -1,0 +1,42 @@
+---
+title: "Scrape web pages"
+description: "Control caching, timeouts, and dynamic page extraction."
+icon: "file-code"
+---
+
+Use the synchronous scrape endpoint when your caller can wait for the result. PagePith tries the least expensive extraction method first and escalates when a page requires JavaScript rendering or additional handling.
+
+## Request options
+
+| Field | Default | Use it when |
+| --- | --- | --- |
+| `url` | Required | You have a complete public `http` or `https` URL. |
+| `forceFresh` | `false` | You need to bypass a cached result. |
+| `timeoutMs` | `45000` | You need a request budget from 1,000 to 120,000 milliseconds. |
+| `waitForSelector` | None | Dynamic content is ready only after a CSS selector appears. |
+| `extraWaitMs` | `0` | A rendered page needs up to 10,000 milliseconds to settle. |
+
+```bash
+curl --request POST \
+  --url https://api.pagepith.com/v1/api/scrape \
+  --header "Authorization: Bearer $PAGEPITH_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{
+    "url": "https://example.com/pricing",
+    "waitForSelector": "main",
+    "extraWaitMs": 1000
+  }'
+```
+
+## Cache behavior
+
+Responses include a `cached` boolean. Set `forceFresh` to `true` when freshness matters more than latency. You can also invalidate a URL explicitly before its next scrape.
+
+<Tip>
+  Use cached results for repeat reads. Reserve `forceFresh` for content you expect to have changed.
+</Tip>
+
+## Choose synchronous or asynchronous scraping
+
+- Use [synchronous scraping](/api-reference/scrape/scrape-url) for interactive requests and single URLs.
+- Use [asynchronous scraping](/guides/async-scraping) for batch ingestion or work that should not hold an HTTP connection open.

@@ -1,0 +1,47 @@
+---
+title: "API overview"
+description: "Base URL, authentication, usage, and endpoint categories."
+icon: "brackets-curly"
+---
+
+PagePith exposes a JSON REST API at `https://api.pagepith.com`. All customer endpoints use HTTPS and JSON.
+
+## Base URL
+
+```text
+https://api.pagepith.com
+```
+
+## Authentication
+
+Send your API key as a Bearer token.
+
+```http
+Authorization: Bearer pp_live_your_key
+```
+
+See [Authentication](/authentication) for key management and error behavior.
+
+## Endpoints
+
+<Columns cols={2}>
+  <Card title="Scrape" icon="file-code" href="/api-reference/scrape/scrape-url">
+    Convert a public URL into Markdown and HTML.
+  </Card>
+
+  <Card title="Video" icon="video" href="/api-reference/video/process-video">
+    Process a public social video transcript.
+  </Card>
+
+  <Card title="Monitoring" icon="radar" href="/api-reference/monitoring/list-monitors">
+    Detect changes to public pages.
+  </Card>
+
+  <Card title="Errors" icon="triangle-alert" href="/api-reference/errors">
+    Handle HTTP status codes and machine-readable errors.
+  </Card>
+</Columns>
+
+## Usage
+
+A successful synchronous or asynchronous page scrape consumes one credit. Native video captions consume one credit. Generated video transcripts consume four credits per rounded-up audio minute.
