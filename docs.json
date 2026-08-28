@@ -7,7 +7,7 @@
     "light": "#F3C43E",
     "dark": "#4127B7"
   },
-  "favicon": "https://pagepith.com/icon.svg",
+  "favicon": "/favicon.svg",
   "navigation": {
     "pages": [
       {
@@ -102,8 +102,8 @@
     ]
   },
   "logo": {
-    "light": "https://pagepith.com/icon.svg",
-    "dark": "https://pagepith.com/icon.svg",
+    "light": "/favicon.svg",
+    "dark": "/favicon.svg",
     "href": "https://pagepith.com"
   },
   "navbar": {
