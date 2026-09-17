@@ -47,6 +47,7 @@
         "icon": "book-open",
         "pages": [
           "guides/scraping",
+          "guides/branding",
           "guides/async-scraping",
           "guides/video",
           "guides/monitoring",
@@ -64,8 +65,14 @@
             "icon": "file-code",
             "pages": [
               "api-reference/scrape/scrape-url",
-              "api-reference/scrape/scrape-url-async",
-              "api-reference/scrape/invalidate-cache"
+              "api-reference/scrape/scrape-url-async"
+            ]
+          },
+          {
+            "group": "Brand",
+            "icon": "palette",
+            "pages": [
+              "api-reference/brand/extract-brand"
             ]
           },
           {
@@ -173,7 +180,7 @@
       }
     ]
   },
-  "description": "Documentation for turning web pages, documents, and social videos into clean, structured content with the PagePith API and MCP server.",
+  "description": "Documentation for turning websites, documents, social videos, and company brands into structured data with the PagePith API and MCP server.",
   "api": {
     "openapi": "https://api.pagepith.com/openapi.json",
     "params": {
