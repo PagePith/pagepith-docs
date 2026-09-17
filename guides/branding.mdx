@@ -1,0 +1,118 @@
+---
+title: "Extract brand profiles"
+sidebarTitle: "Extract brand profiles"
+description: "Extract company context, logos, colors, fonts, and social profiles from a URL."
+icon: "palette"
+tag: "NEW"
+---
+
+PagePith turns a public company website into a structured brand profile for onboarding, personalization, lead enrichment, creative tooling, and AI context.
+
+<Info>
+  A successful Branding API request consumes **5 credits**. Failed requests are not charged.
+</Info>
+
+## Extract a brand profile
+
+Send the company homepage or another canonical public URL. PagePith follows high-signal pages such as About, Brand, Press, and Contact when they are available.
+
+```bash
+curl --request POST \
+  --url https://api.pagepith.com/v1/api/brand \
+  --header "Authorization: Bearer $PAGEPITH_API_KEY" \
+  --header "Content-Type: application/json" \
+  --data '{"url":"https://stripe.com"}'
+```
+
+The only request field is `url`. It must be a complete public `http` or `https` URL.
+
+## Response
+
+```json
+{
+  "url": "https://stripe.com",
+  "finalUrl": "https://stripe.com/",
+  "domain": "stripe.com",
+  "name": "Stripe",
+  "description": "Financial infrastructure for the internet.",
+  "industry": "Financial technology",
+  "location": {
+    "city": "South San Francisco",
+    "region": "California",
+    "country": "United States"
+  },
+  "logos": [
+    {
+      "url": "https://stripe.com/img/v3/home/twitter.png",
+      "type": "logo",
+      "format": "png",
+      "background": "any",
+      "sourceUrl": "https://stripe.com/",
+      "confidence": 0.94
+    }
+  ],
+  "colors": [
+    {
+      "hex": "#635BFF",
+      "role": "primary",
+      "source": "site",
+      "confidence": 0.98
+    }
+  ],
+  "fonts": [
+    {
+      "family": "Inter",
+      "weights": [400, 500, 600],
+      "role": "body"
+    }
+  ],
+  "socials": [
+    {
+      "platform": "linkedin",
+      "url": "https://www.linkedin.com/company/stripe"
+    }
+  ],
+  "sources": [
+    "https://stripe.com/",
+    "https://stripe.com/about"
+  ],
+  "fetchedAt": "2026-09-17T03:00:00.000Z"
+}
+```
+
+<Note>
+  Values above illustrate the response shape. Returned assets and company details reflect the public site at request time.
+</Note>
+
+## Understand the fields
+
+| Field | Description |
+| --- | --- |
+| `name`, `description`, `industry`, `location` | Company facts normalized from public on-site evidence. Optional facts are `null` when they cannot be supported. |
+| `logos` | Original logo and icon asset URLs with format, dimensions when available, intended background, source page, and confidence. |
+| `colors` | Normalized uppercase hex colors detected from rendered styles or logo markup, with semantic role and confidence. |
+| `fonts` | Font families, observed weights, and likely heading or body role. |
+| `socials` | One canonical public profile per detected social platform. |
+| `sources` | Public pages used as evidence for the profile. |
+| `fetchedAt` | ISO 8601 timestamp for when PagePith produced the profile. |
+
+## Use the result safely
+
+- Treat `logos[].url` as an external asset URL. Download and store an approved copy when your workflow requires a stable asset.
+- Prefer higher-confidence logos and colors when selecting a single default.
+- Check nullable company fields before displaying them.
+- Keep `sources` when downstream users need to audit where company facts came from.
+
+## Errors
+
+| Status | Meaning |
+| --- | --- |
+| `400` | The request body or URL is invalid. |
+| `401` | The API key is missing or invalid. |
+| `402` | The account does not have enough available credits. |
+| `422` | The website did not expose enough usable brand evidence. |
+| `502` | Company-field normalization failed. |
+| `503` | Branding extraction is temporarily unavailable. |
+| `504` | The request exceeded the extraction time limit. |
+
+See [Extract a brand profile](/api-reference/brand/extract-brand) for the interactive schema and generated client examples.
